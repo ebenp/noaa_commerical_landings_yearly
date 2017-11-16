@@ -124,7 +124,7 @@ with Browser() as browser:
     # obtain and save tables in html and tab delimited text for each year desired
     for year in years:
         print(year)
-        html, df = parse_table(browser url, year)
+        html, df = parse_table(browser, url, year)
         # Write out to the sqlite database using scraperwiki library
         scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year, "html": html,"dataframe":df})
 '''    
