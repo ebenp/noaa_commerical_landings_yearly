@@ -48,7 +48,7 @@ if __name__ == '__main__':
           '/total-commercial-fishery-landings-at-major-u-s-ports-summarized-by-year-and-ranked-by-dollar-value/index'
     # processing
     # set up our driver here
-    with Browser() as browser:
+    with Browser('phantomjs', load_images=False) as browser:
         # access the url with the driver
         browser.visit(url)
         # obtain years to access tables
