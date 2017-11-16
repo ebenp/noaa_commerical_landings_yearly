@@ -83,7 +83,7 @@ def open_url_query_years(browser):
     # get our selector options
     select = browser.find_by_id("qyear")
 
-    return select
+    return select.text.split('\n')
 
 def parse_table(browser,url,year):
 
@@ -110,7 +110,7 @@ Main script with user inputs
 
 # inputs
 
-'''
+
 url = 'https://www.st.nmfs.noaa.gov/commercial-fisheries/commercial-landings' + \
       '/other-specialized-programs' + \
       '/total-commercial-fishery-landings-at-major-u-s-ports-summarized-by-year-and-ranked-by-dollar-value/index'
@@ -126,8 +126,9 @@ with Browser() as browser:
         print(year)
         html, df = parse_table(browser, url, year)
         # Write out to the sqlite database using scraperwiki library
-        scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year, "html": html,"dataframe":df})
-'''    
+        scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year, "html": html,"text": df.to_csv(sep='\t')})
+
+
 # You don't have to do things with the ScraperWiki and lxml libraries.
 # You can use whatever libraries you want: https://morph.io/documentation/python
 # All that matters is that your final data is written to an SQLite database
