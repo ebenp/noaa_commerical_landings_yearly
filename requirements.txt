@@ -8,6 +8,6 @@
 lxml==3.4.4
 cssselect==0.9.1
 splinter>=0.7.3
-requests>=2.18.4
-pandas>=0.20.3
-beautifulsoup4>=4.6.0
+#requests>=2.18.4
+#pandas>=0.20.3
+#beautifulsoup4>=4.6.0
