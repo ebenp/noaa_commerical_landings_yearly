@@ -67,8 +67,6 @@ Main script with user inputs
 url = 'https://www.st.nmfs.noaa.gov/commercial-fisheries/commercial-landings' + \
       '/other-specialized-programs' + \
       '/total-commercial-fishery-landings-at-major-u-s-ports-summarized-by-year-and-ranked-by-dollar-value/index'
-output_dir='/Users/eben/Documents/GitHub/scraping_landings_data/text_output'
-
 # processing
 # set up our driver here
 options = Options()
