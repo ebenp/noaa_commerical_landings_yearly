@@ -41,23 +41,24 @@ Main script with user inputs
 
 # inputs
 
+if __name__ == '__main__':
 
-url = 'https://www.st.nmfs.noaa.gov/commercial-fisheries/commercial-landings' + \
-      '/other-specialized-programs' + \
-      '/total-commercial-fishery-landings-at-major-u-s-ports-summarized-by-year-and-ranked-by-dollar-value/index'
-# processing
-# set up our driver here
-with Browser() as browser:
-    # access the url with the driver
-    browser.visit(url)
-    # obtain years to access tables
-    years = open_url_query_years(browser)
-    # obtain and save tables in html and tab delimited text for each year desired
-    for year in years:
-        print(year)
-        html = parse_table(browser, url, year)
-        # Write out to the sqlite database using scraperwiki library
-        scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year, "html": html})
+    url = 'https://www.st.nmfs.noaa.gov/commercial-fisheries/commercial-landings' + \
+          '/other-specialized-programs' + \
+          '/total-commercial-fishery-landings-at-major-u-s-ports-summarized-by-year-and-ranked-by-dollar-value/index'
+    # processing
+    # set up our driver here
+    with Browser() as browser:
+        # access the url with the driver
+        browser.visit(url)
+        # obtain years to access tables
+        years = open_url_query_years(browser)
+        # obtain and save tables in html and tab delimited text for each year desired
+        for year in years:
+            print(year)
+            html = parse_table(browser, url, year)
+            # Write out to the sqlite database using scraperwiki library
+            scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year, "html": html})
 
 
 # You don't have to do things with the ScraperWiki and lxml libraries.
