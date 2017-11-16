@@ -2,28 +2,22 @@
 # including some code snippets below that you should find helpful
 
 import scraperwiki
-import lxml.html
-from selenium.webdriver import Firefox
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.support import expected_conditions as expected
-from selenium.webdriver.support.wait import WebDriverWait
+from splinter import Browser
 # html table parser modified from github
 from htmltableparser import HTMLTableParser
 
-def open_url_query_years(wait):
+def open_url_query_years(browser):
     '''
     Queries given url by qyear. Returns years
     :param wait: wait from WebDriverWait
     :return: list of queryable years
     '''
     # get our selector options
-    select = Select(wait.until(expected.visibility_of_element_located((By.ID,"qyear"))))
+    select = browser.find_by_id("qyear")
 
-    return [o.text for o in select.options]
+    return select
 
-def parse_table(wait,driver,url,year):
+def parse_table(browser,url,year):
 
     '''
     Parses a queried page to an HTML and dataframe
@@ -34,31 +28,14 @@ def parse_table(wait,driver,url,year):
     :return: html, html source and table as a pandas dataframe
     '''
 
-    driver.get(url)
-    wait.until(expected.visibility_of_element_located((By.XPATH,"//select[@name='qyear']/option[text()=" + year + "]"))).click()
-    wait.until(expected.visibility_of_element_located((By.XPATH, "//input[@value='Submit Query'][@type='submit']"))).click()
-    html = driver.page_source
+    browser.visit(url)
+    browser.find_by_xpath("//select[@name='qyear']/option[text()=" + year + "]").click()
+    browser.find_by_xpath("//input[@value='Submit Query'][@type='submit']").click()
+    html = browser.html
     hp = HTMLTableParser()
     table = hp.parse_url(url, html=html, singletable=True)[0][1]  # Grabbing the table from the tuple
 
     return html, table
-
-def save_html_text(html,df,outpath,year):
-
-    '''
-    Saves table to html and text files.
-
-    :param html: html source as string to save
-    :param df: dataframe of able to save
-    :param outpath: path to directory to save html and text files. The year is appended here
-    :param year: year label for file names
-    :return: None
-    '''
-
-    df.to_csv(outpath+r'//'+year+'.txt', sep='\t',index=False)
-    with open(outpath+r'//'+year+'.html', "w") as file:
-        file.write(html)
-    return
 '''
 Main script with user inputs
 '''
@@ -69,21 +46,17 @@ url = 'https://www.st.nmfs.noaa.gov/commercial-fisheries/commercial-landings' + 
       '/total-commercial-fishery-landings-at-major-u-s-ports-summarized-by-year-and-ranked-by-dollar-value/index'
 # processing
 # set up our driver here
-options = Options()
-options.add_argument('-headless')
-driver = Firefox(executable_path='geckodriver', firefox_options=options)
-# set up wait
-wait = WebDriverWait(driver, timeout=10)
-# access the url with the driver
-driver.get(url)
-# obtain years to access tables
-years = open_url_query_years(wait)
-# obtain and save tables in html and tab delimited text for each year desired
-for year in years:
-    print(year)
-    html, df = parse_table(wait, driver, url, year)
-    # Write out to the sqlite database using scraperwiki library
-    scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year, "html": html,"dataframe":df})
+with Browser() as browser:
+    # access the url with the driver
+    browser.visit(url)
+    # obtain years to access tables
+    years = open_url_query_years(browser)
+    # obtain and save tables in html and tab delimited text for each year desired
+    for year in years:
+        print(year)
+        html, df = parse_table(browser url, year)
+        # Write out to the sqlite database using scraperwiki library
+        scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year, "html": html,"dataframe":df})
     
 # You don't have to do things with the ScraperWiki and lxml libraries.
 # You can use whatever libraries you want: https://morph.io/documentation/python
