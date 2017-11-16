@@ -1,12 +1,13 @@
-'''
+
 import scraperwiki
 from splinter import Browser
 import requests
-import pandas as pd
-from bs4 import BeautifulSoup
+#import pandas as pd
+#from bs4 import BeautifulSoup
 # html table parser modified from github
 # modified from http://srome.github.io/Parsing-HTML-Tables-in-Python-with-BeautifulSoup-and-pandas/
 # credits to Scott Rome.
+'''
 class HTMLTableParser:
     def parse_url(self, url, html=None, singletable=True):
 
@@ -74,7 +75,7 @@ class HTMLTableParser:
                 pass
 
         return df
-
+'''
 def open_url_query_years(browser):
     '''
     Queries given url by qyear. Returns years
@@ -101,10 +102,11 @@ def parse_table(browser,url,year):
     browser.find_by_xpath("//select[@name='qyear']/option[text()=" + year + "]").click()
     browser.find_by_xpath("//input[@value='Submit Query'][@type='submit']").click()
     html = browser.html
+    '''
     hp = HTMLTableParser()
     table = hp.parse_url(url, html=html, singletable=True)[0][1]  # Grabbing the table from the tuple
-
-    return html, table
+    '''
+    return html
 '''
 Main script with user inputs
 '''
@@ -125,9 +127,9 @@ with Browser() as browser:
     # obtain and save tables in html and tab delimited text for each year desired
     for year in years:
         print(year)
-        html, df = parse_table(browser, url, year)
+        html = parse_table(browser, url, year)
         # Write out to the sqlite database using scraperwiki library
-        scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year, "html": html,"text": df.to_csv(sep='\t')})
+        scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year, "html": html})
 
 
 # You don't have to do things with the ScraperWiki and lxml libraries.
