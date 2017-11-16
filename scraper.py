@@ -1,5 +1,8 @@
 import scraperwiki
 from splinter import Browser
+import requests
+import pandas as pd
+from bs4 import BeautifulSoup
 # html table parser modified from github
 # modified from http://srome.github.io/Parsing-HTML-Tables-in-Python-with-BeautifulSoup-and-pandas/
 # credits to Scott Rome.
