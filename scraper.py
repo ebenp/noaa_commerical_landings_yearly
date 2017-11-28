@@ -91,7 +91,7 @@ if __name__ == '__main__':
     for year in years:
         print(year)
         html, df = parse_table(wait, driver, url, year)
-        save_html_text(html, df, output_dir,year)
+        #save_html_text(html, df, output_dir,year)
 
     # Print completion
     print('DONE!')
