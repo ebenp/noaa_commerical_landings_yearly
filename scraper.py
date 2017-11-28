@@ -73,7 +73,7 @@ if __name__ == '__main__':
     # processing
     # set up our driver here
     options = Options()
-    run = 'local'
+    run = 'morph'
     # Morph.io exacutable path
     if run == 'morph':
         execut_path='/usr/bin/phantomjs'
