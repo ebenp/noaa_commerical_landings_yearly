@@ -5,3 +5,4 @@ data.sqlite
 *.gitignore
 scraper_original.py
 src/scraperwiki/
+*.pyc
