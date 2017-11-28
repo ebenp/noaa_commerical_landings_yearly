@@ -73,9 +73,13 @@ if __name__ == '__main__':
     # processing
     # set up our driver here
     options = Options()
+    run = 'local'
     # Morph.io exacutable path
-    #executable_path='/usr/bin/phantomjs'
-    driver = webdriver.PhantomJS(service_args=['--web-security=no',
+    if run == 'morph':
+        execut_path='/usr/bin/phantomjs'
+    else:
+        execut_path = '/usr/local/bin/phantomjs'
+    driver = webdriver.PhantomJS(executable_path=execut_path,service_args=['--web-security=no',
                                                '--ssl-protocol=any', '--ignore-ssl-errors=yes'])
     # set up wait
     wait = WebDriverWait(driver, timeout=10)

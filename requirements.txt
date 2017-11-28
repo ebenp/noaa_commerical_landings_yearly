@@ -7,3 +7,5 @@
 
 
 splinter>=0.7.3
+selenium>=3.7.0
+
