@@ -1,9 +1,8 @@
 from splinter import Browser
 import sys, shutil
 
-dev_mode = True
-
-with Browser("phantomjs") as browser:
+dev_mode = False
+with Browser("phantomjs", service_args=['--ignore-ssl-errors=true', '--ssl-protocol=any']) as browser:
     # Optional, but make sure large enough that responsive pages don't
     # hide elements on you...
     browser.driver.set_window_size(1280, 1024)
