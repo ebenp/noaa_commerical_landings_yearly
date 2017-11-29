@@ -9,3 +9,7 @@
 splinter>=0.7.3
 selenium>=3.7.0
 archivertools>=0.0.2.dev2
+requests>=2.18.4
+pandas>=0.20.3
+beautifulsoup4>=4.6.0
+

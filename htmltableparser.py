@@ -13,8 +13,8 @@ class HTMLTableParser:
             response = requests.get(url)
             page = response.text
 
-
-        soup = BeautifulSoup(page,'lxml')
+        # updated from 'lxml' to built in parser
+        soup = BeautifulSoup(page,'html.parser')
         # updated table ID to index
         if singletable:
             return [(table.index, self.parse_html_table(table)) \

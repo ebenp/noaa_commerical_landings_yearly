@@ -78,9 +78,11 @@ if __name__ == '__main__':
     # local output
     output_dir='/Users/eben/Documents/GitHub/scraping_landings_data/text_output'
 
-    # processing
     # set up our driver here. Either a local or morph run
     run = 'local'
+    # set up our driver here
+    options = Options()
+    run = 'morph'
     # Morph.io exacutable path
     if run == 'morph':
         execut_path='/usr/bin/phantomjs'
@@ -106,7 +108,6 @@ if __name__ == '__main__':
     for year in years:
         print(year)
         html, df = parse_table(wait, driver, url, year)
-
         # if a local run try and save the html and the dataframe as a csv file to the
         # output directory
         if run == 'local':
