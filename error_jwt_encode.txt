@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/eben/miniconda2/envs/anenv3/lib/python3.6/site-packages/archivertools/__init__.py", line 77, in __getJWT
+    jwt.decode(token, pubkey, algorithms=['RS256'])
+AttributeError: module 'jwt' has no attribute 'decode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/eben/Documents/GitHub/noaa_commerical_landings_yearly/scraper.py", line 125, in <module>
+    a.commit()
+  File "/Users/eben/miniconda2/envs/anenv3/lib/python3.6/site-packages/archivertools/__init__.py", line 147, in commit
+    token = str(self.__getJWT(),'utf-8')
+  File "/Users/eben/miniconda2/envs/anenv3/lib/python3.6/site-packages/archivertools/__init__.py", line 78, in __getJWT
+    except jwt.exceptions.DecodeError as E:
+AttributeError: module 'jwt.exceptions' has no attribute 'DecodeError'
