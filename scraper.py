@@ -70,7 +70,8 @@ if __name__ == '__main__':
     '''
     Main script with user inputs
     '''
-
+    #TODO: get archivere tool working. Some exacute error on the jwt token
+    #TODO: add in morph.io sqlite database as an intermediate data QC step
     # inputs
     url = 'https://www.st.nmfs.noaa.gov/commercial-fisheries/commercial-landings' + \
           '/other-specialized-programs' + \
@@ -122,8 +123,14 @@ if __name__ == '__main__':
                 df.to_csv(filename.name,index=False)
                 comments = 'Yearly table'
                 a.addFile(filename.name, comments)
-                filename.flush()
             '''
+            if run == 'morph':
+                # buffer implementation
+                with tempfile.NamedTemporaryFile() as filename:
+                    df.to_csv(filename.name,index=False)
+                    comments = 'Yearly table'
+                    a.addFile(filename.name, comments)
+
             #save_html_text(html, df, output_dir,year)
     a.commit()
     # Print completion
