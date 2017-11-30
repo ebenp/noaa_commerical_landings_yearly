@@ -4,7 +4,7 @@
 
 # Custom version of scraperwiki library for Python 3
 # https://github.com/openaustralia/scraperwiki-python/pull/1
--e git+git://github.com/andylolz/scraperwiki-python
+-e git://github.com/andylolz/scraperwiki-python#egg=scraperwiki-python
 
 
 splinter>=0.7.3
