@@ -15,6 +15,8 @@ import os
 from archivertools import Archiver
 # buffer tools
 import tempfile
+# scraperwiki
+import scraperwiki
 
 
 def open_url_query_years(wait):
@@ -70,7 +72,6 @@ if __name__ == '__main__':
     '''
     Main script with user inputs
     '''
-    #TODO: get archivere tool working. Some exacute error on the jwt token
     #TODO: add in morph.io sqlite database as an intermediate data QC step
     # inputs
     url = 'https://www.st.nmfs.noaa.gov/commercial-fisheries/commercial-landings' + \
@@ -80,9 +81,6 @@ if __name__ == '__main__':
     output_dir='/Users/eben/Documents/GitHub/scraping_landings_data/text_output'
 
     # set up our driver here. Either a local or morph run
-    run = 'local'
-    # set up our driver here
-    options = Options()
     run = 'morph'
     # Morph.io exacutable path
     if run == 'morph':
@@ -109,6 +107,11 @@ if __name__ == '__main__':
     for year in years:
         print(year)
         html, df = parse_table(wait, driver, url, year)
+        # Write out to the sqlite database using scraperwiki library
+        with tempfile.NamedTemporaryFile() as filename:
+            df.to_csv(filename.name, index=False)
+            comments = 'Yearly table'
+        scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year, "table": filename.name,"comment": comments})
         # if a local run try and save the html and the dataframe as a csv file to the
         # output directory
         if run == 'local':
@@ -132,6 +135,7 @@ if __name__ == '__main__':
                     a.addFile(filename.name, comments)
 
             #save_html_text(html, df, output_dir,year)
-    a.commit()
+    # Archivertools commit
+    #a.commit()
     # Print completion
     print('DONE!')
