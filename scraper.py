@@ -111,7 +111,7 @@ if __name__ == '__main__':
         with tempfile.NamedTemporaryFile() as filename:
             df.to_csv(filename.name, index=False)
             comments = 'Yearly table'
-        scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year, "table": filename.name,"comment": comments})
+            scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year, "table": filename.name,"comment": comments})
         # if a local run try and save the html and the dataframe as a csv file to the
         # output directory
         if run == 'local':
