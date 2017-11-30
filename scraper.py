@@ -108,10 +108,8 @@ if __name__ == '__main__':
         print(year)
         html, df = parse_table(wait, driver, url, year)
         # Write out to the sqlite database using scraperwiki library
-        with tempfile.NamedTemporaryFile() as filename:
-            df.to_csv(filename.name, index=False)
-            comments = 'Yearly table'
-            scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year, "table": filename.name,"comment": comments})
+        comments = 'Yearly table'
+        scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year,"table": html,"comment": comments})
         # if a local run try and save the html and the dataframe as a csv file to the
         # output directory
         if run == 'local':
