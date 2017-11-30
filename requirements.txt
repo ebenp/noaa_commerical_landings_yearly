@@ -13,4 +13,6 @@ archivertools>=0.0.2.dev2
 requests>=2.18.4
 pandas>=0.20.3
 beautifulsoup4>=4.6.0
+jwt>=0.5.2
+
 
