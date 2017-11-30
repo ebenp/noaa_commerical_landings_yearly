@@ -103,13 +103,13 @@ if __name__ == '__main__':
 
     # obtain years to access tables
     years = open_url_query_years(wait)
+    # Write out to the sqlite database using scraperwiki library
+    comments = 'Yearly table'
+    scraperwiki.sqlite.save(unique_keys=['year'], data={"year": years, "comment": comments})
     # obtain and save tables in html and tab delimited text for each year desired
     for year in years:
         print(year)
         html, df = parse_table(wait, driver, url, year)
-        # Write out to the sqlite database using scraperwiki library
-        comments = 'Yearly table'
-        scraperwiki.sqlite.save(unique_keys=['year'], data={"year": year,"table_string": df.to_string(),"comment": comments})
         # if a local run try and save the html and the dataframe as a csv file to the
         # output directory
         if run == 'local':
