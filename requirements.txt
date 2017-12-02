@@ -2,10 +2,7 @@
 # specified here will be installed and made available to your morph.io scraper.
 # Find out more: https://morph.io/documentation/python
 
-# Custom version of scraperwiki library for Python 3
-# https://github.com/openaustralia/scraperwiki-python/pull/1
--e git://github.com/andylolz/scraperwiki-python#egg=scraperwiki-python
-
+https://github.com/openaustralia/scraperwiki-python/pull/1
 
 splinter>=0.7.3
 selenium>=3.7.0
